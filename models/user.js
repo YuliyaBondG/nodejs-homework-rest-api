@@ -25,6 +25,14 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationCode: {
+      type: String,
+      default: "",
+    },
   },
   { versionKey: false }
 );
@@ -43,13 +51,16 @@ const subscriptionSchema = Joi.object({
     .required()
     .messages({ "any.required": "missing field {#label}" }),
 });
+const emailSchema = Joi.object({
+  email: Joi.string().required(),
+});
 const schemas = {
   registerSchema,
   loginSchema,
   subscriptionSchema,
+  emailSchema,
 };
 const User = model("user", userSchema);
-
 module.exports = {
   User,
   schemas,
